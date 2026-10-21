@@ -1,0 +1,874 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Diário Oficial de Parauapebas — busca</title>
+<meta name="description" content="Diário Oficial de Parauapebas pesquisável.">
+<link rel="stylesheet" href="./style.css"></head><body>
+<header data-pagefind-ignore><a href="./">← Diário Oficial de Parauapebas</a>
+<h1>Diário Oficial de Parauapebas — busca</h1></header>
+<main >
+<section class="busca-topo">
+  <div class="busca-linha">
+    <input id="q" type="search" autocomplete="off" autofocus
+      placeholder="Nome, decreto, portaria, assunto…">
+    <button id="btnBuscar" class="btn" type="button">Buscar</button>
+  </div>
+  <div id="sugestoes" class="sugestoes" hidden></div>
+  <div class="atalhos">
+    <button class="atalho" type="button" data-atalho="exoneracao">Exonerações</button>
+    <button class="atalho" type="button" data-atalho="nomeacao">Nomeações</button>
+    <button class="atalho" type="button" data-atalho="designacao">Designações</button>
+    <button class="atalho" type="button" data-atalho="decreto">Decretos</button>
+    <button class="atalho" type="button" data-atalho="portaria">Portarias</button>
+    <button class="atalho" type="button" data-atalho="edital">Editais</button>
+    <button class="atalho" type="button" data-atalho="aviso">Avisos</button>
+    <button class="atalho" type="button" data-atalho="contrato">Contratos</button>
+    <button class="atalho" type="button" data-atalho="7dias">Últimos 7 dias</button>
+  </div>
+  <div class="abas" role="tablist" aria-label="Tipo de resultado">
+    <button class="aba ativa" type="button" data-aba="tudo">Tudo</button>
+    <button class="aba" type="button" data-aba="atos">Atos</button>
+    <button class="aba" type="button" data-aba="publicacoes">Publicações</button>
+    <button class="aba" type="button" data-aba="pessoas">Pessoas</button>
+    <button class="aba" type="button" data-aba="texto">Texto integral</button>
+  </div>
+  <details class="filtros-box" open>
+    <summary>Filtros</summary>
+    <div class="filtros">
+      <label>Ano<select id="fAno"><option value="">Todos</option><option value="2026">2026</option></select></label>
+      <label>De<input type="date" id="fDe"></label>
+      <label>Até<input type="date" id="fAte"></label>
+      <label>Secretaria/órgão<select id="fOrgao">
+        <option value="">Todas</option></select></label>
+      <label>Categoria<select id="fCategoria">
+        <option value="">Todas</option></select></label>
+      <label>Tipo<select id="fTipo">
+        <option value="">Decreto e Portaria</option>
+        <option value="DECRETO">Decreto</option>
+        <option value="PORTARIA">Portaria</option></select></label>
+      <label>Tipo de publicação<select id="fDoc">
+        <option value="">Todas</option></select></label>
+      <label>Edição<select id="fEdicao">
+        <option value="">Normal e Extra</option>
+        <option value="Normal">Normal</option>
+        <option value="Extra">Extra</option></select></label>
+      <label>Ordenar<select id="fOrdenar">
+        <option value="relevancia">Relevância</option>
+        <option value="data">Data (mais recente)</option></select></label>
+      <label class="limpar"><button id="btnLimpar" class="btn-secundario"
+        type="button">Limpar filtros</button></label>
+    </div>
+  </details>
+  <div id="chips" class="chips"></div>
+  <div id="resumo" class="resumo muted"></div>
+</section>
+<div id="grupos"></div>
+<div id="vazio" class="vazio card" hidden>
+  <strong>Nenhum resultado.</strong>
+  <ul>
+    <li>Tente o número do ato: <em>Decreto 1531</em> ou <em>17/2026</em>.</li>
+    <li>Tente só o primeiro nome ou o sobrenome.</li>
+    <li>Use os filtros de secretaria, categoria e período.</li>
+  </ul>
+</div>
+<details class="acervo-box">
+  <summary>Acervo e edições recentes</summary>
+  <p class="muted">249 edição(ões) · 4279 atos estruturados ·
+  1588 pessoas · 8592 páginas indexadas.</p>
+  <p><a href="edicoes/">ver todas as edições</a></p>
+  <div class="card"><div class="row"><strong><a href="edicoes/2026-10-20/">D.O. nº 1463 — 2026-10-20 (Normal)</a></strong><span class="badge">43 ato(s)</span><span class="badge">39 pág.</span></div><div class="muted">2026.10.20.pdf</div></div><div class="card"><div class="row"><strong><a href="edicoes/2026-10-19/">D.O. nº 1462 — 2026-10-19 (Normal)</a></strong><span class="badge">14 ato(s)</span><span class="badge">13 pág.</span></div><div class="muted">2026.10.19.pdf</div></div><div class="card"><div class="row"><strong><a href="edicoes/2026-10-16/">D.O. nº 1461 — 2026-10-16 (Normal)</a></strong><span class="badge">60 ato(s)</span><span class="badge">37 pág.</span></div><div class="muted">2026.10.16.pdf</div></div><div class="card"><div class="row"><strong><a href="edicoes/2026-10-15-extra/">D.O. nº 1460 — 2026-10-15 (Extra)</a></strong><span class="badge">5 ato(s)</span><span class="badge">13 pág.</span></div><div class="muted">2026.10.15-extra.pdf</div></div><div class="card"><div class="row"><strong><a href="edicoes/2026-10-15/">D.O. nº 1459 — 2026-10-15 (Normal)</a></strong><span class="badge">15 ato(s)</span><span class="badge">61 pág.</span></div><div class="muted">2026.10.15.pdf</div></div><div class="card"><div class="row"><strong><a href="edicoes/2026-10-14-extra/">D.O. nº 1458 — 2026-10-14 (Extra)</a></strong><span class="badge">1 ato(s)</span><span class="badge">4 pág.</span></div><div class="muted">2026.10.14-extra.pdf</div></div><div class="card"><div class="row"><strong><a href="edicoes/2026-10-14/">D.O. nº 1457 — 2026-10-14 (Normal)</a></strong><span class="badge">19 ato(s)</span><span class="badge">16 pág.</span></div><div class="muted">2026.10.14.pdf</div></div><div class="card"><div class="row"><strong><a href="edicoes/2026-10-13/">D.O. nº 1456 — 2026-10-13 (Normal)</a></strong><span class="badge">7 ato(s)</span><span class="badge">9 pág.</span></div><div class="muted">2026.10.13.pdf</div></div><div class="card"><div class="row"><strong><a href="edicoes/2026-10-09-extra/">D.O. nº 1455 — 2026-10-09 (Extra)</a></strong><span class="badge">2 ato(s)</span><span class="badge">3 pág.</span></div><div class="muted">2026.10.09-extra.pdf</div></div><div class="card"><div class="row"><strong><a href="edicoes/2026-10-09/">D.O. nº 1454 — 2026-10-09 (Normal)</a></strong><span class="badge">7 ato(s)</span><span class="badge">16 pág.</span></div><div class="muted">2026.10.09.pdf</div></div><div class="card"><div class="row"><strong><a href="edicoes/2026-10-08-extra/">D.O. nº 1453 — 2026-10-08 (Extra)</a></strong><span class="badge">14 ato(s)</span><span class="badge">4 pág.</span></div><div class="muted">2026.10.08-extra.pdf</div></div><div class="card"><div class="row"><strong><a href="edicoes/2026-10-08/">D.O. nº 1452 — 2026-10-08 (Normal)</a></strong><span class="badge">8 ato(s)</span><span class="badge">15 pág.</span></div><div class="muted">2026.10.08.pdf</div></div>
+</details>
+<script>window.DIARIO_ANOS = ["2026"]; window.DIARIO_MAX_DATA = "2026-10-20";</script>
+<script type="module">
+const ANOS = window.DIARIO_ANOS || [];
+const MAX_DATA = window.DIARIO_MAX_DATA || "";
+const $ = (id) => document.getElementById(id);
+const elQ = $("q"), elBtn = $("btnBuscar"), elSug = $("sugestoes");
+const elAbas = [...document.querySelectorAll(".aba")];
+const elAno = $("fAno"), elDe = $("fDe"), elAte = $("fAte");
+const elOrgao = $("fOrgao"), elCategoria = $("fCategoria"), elTipo = $("fTipo");
+const elEdicao = $("fEdicao"), elOrdenar = $("fOrdenar"), elLimpar = $("btnLimpar");
+const elDoc = $("fDoc");
+const elChips = $("chips"), elResumo = $("resumo"), elGrupos = $("grupos");
+const elVazio = $("vazio");
+let pagefind = null;
+let cacheAnos = {};
+let atos = [], nomes = [], nomesTexto = [], publicacoes = [], mapaPaginas = new Map();
+let orgaosConhecidos = new Set();
+let dadosProntos = false, carregando = null;
+let aba = "tudo", textoAberto = false;
+let timerBusca = null, timerSug = null;
+let sugestoes = [], sugIdx = -1, sugNavegou = false;
+let totalAtos = 0, totalPessoas = 0, totalPublicacoes = 0, totalNomesTexto = 0;
+let urlAplicada = false;
+const DOC_TERMS = [
+  "EDITAL", "AVISO", "EXTRATO", "CONTRATO", "TERMO", "RESULTADO",
+  "ERRATA", "RETIFICACAO", "DISPENSA", "PREGAO", "CHAMAMENTO",
+  "CREDENCIAMENTO", "DECISAO", "LEI", "RESOLUCAO"
+];
+
+function esc(s) {
+  return String(s ?? "").replace(/[&<>"']/g, c => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+  }[c]));
+}
+function linkUrl(u) {
+  const s = String(u || "");
+  if (s.startsWith("http") || s.startsWith("/")) return esc(s);
+  return `./${esc(s)}`;
+}
+function fmtData(iso) {
+  return iso ? String(iso).split("-").reverse().join("/") : "";
+}
+function norm(s) {
+  return String(s ?? "").normalize("NFD")
+    .replace(new RegExp("[\\u0300-\\u036f]", "g"), "")
+    .toUpperCase().replace(/[^A-Z0-9/ ]+/g, " ")
+    .replace(/\s+/g, " ").trim();
+}
+function tokens(s) { return norm(s).split(" ").filter(Boolean); }
+function dedupeNomes(lista) {
+  const m = new Map();
+  for (const p of lista) {
+    const k = norm(p.nome);
+    if (!m.has(k) || (p.n || 0) > (m.get(k).n || 0)) m.set(k, p);
+  }
+  return [...m.values()].sort((a, b) => a.nome.localeCompare(b.nome));
+}
+function parseNumero(raw) {
+  const s = norm(raw).replace(/\s+/g, "");
+  const m = s.match(/^([0-9]+[A-Z]?)(?:\/([0-9]{2,4}))?(?:\/([A-Z]{2,12}))?$/);
+  if (!m) return null;
+  return {
+    num: m[1].replace(/^0+(?=\d)/, ""),
+    ano: m[2] || "",
+    sigla: m[3] || ""
+  };
+}
+function parseConsulta(q) {
+  const t = norm(q);
+  let m = t.match(/^(DECRETO|PORTARIA)\s*(?:N[ºO°.]*)?\s*([0-9]+[A-Z]?)(?:\s*\/\s*([0-9]{2,4}))?(?:\s*\/\s*([A-Z]{2,12}))?$/);
+  if (m) {
+    return {
+      tipo: m[1],
+      numero: { num: m[2].replace(/^0+(?=\d)/, ""), ano: m[3] || "", sigla: m[4] || "" },
+      bruto: q
+    };
+  }
+  m = t.match(/^([0-9]+[A-Z]?)(?:\s*\/\s*([0-9]{2,4}))?(?:\s*\/\s*([A-Z]{2,12}))?$/);
+  if (m) {
+    return {
+      tipo: "",
+      numero: { num: m[1].replace(/^0+(?=\d)/, ""), ano: m[2] || "", sigla: m[3] || "" },
+      bruto: q
+    };
+  }
+  return { tipo: "", numero: null, bruto: q };
+}
+function mesmoAno(a, b) {
+  const aa = String(a || "").replace(/^20/, "").slice(-2);
+  const bb = String(b || "").replace(/^20/, "").slice(-2);
+  return !aa || !bb || aa === bb;
+}
+function numeroConfere(a, alvo, tipo) {
+  if (tipo && a.tipo !== tipo) return false;
+  const p = parseNumero(a.numero);
+  if (!p || p.num !== alvo.num) return false;
+  if (alvo.ano && !mesmoAno(p.ano || (a.data || "").slice(0, 4), alvo.ano)) return false;
+  if (alvo.sigla) {
+    if (p.sigla && p.sigla !== alvo.sigla) return false;
+    if (!p.sigla && a.orgao && a.orgao !== alvo.sigla) return false;
+  }
+  return true;
+}
+function filtros() {
+  return {
+    ano: elAno.value, de: elDe.value, ate: elAte.value,
+    orgao: elOrgao.value, categoria: elCategoria.value,
+    tipo: elTipo.value, doc: elDoc.value, edicao: elEdicao.value,
+    ordenar: elOrdenar.value
+  };
+}
+function passaFiltros(a, f) {
+  if (f.ano && a.data.slice(0, 4) !== f.ano) return false;
+  if (f.de && a.data < f.de) return false;
+  if (f.ate && a.data > f.ate) return false;
+  if (f.orgao && a.orgao !== f.orgao) return false;
+  if (f.categoria && a.categoria !== f.categoria) return false;
+  if (f.tipo && a.tipo !== f.tipo) return false;
+  if (f.edicao && a.tipo_edicao !== f.edicao) return false;
+  return true;
+}
+function montarMapaPaginas() {
+  mapaPaginas = new Map();
+  for (const a of atos) {
+    const fim = a.pagina_fim || a.pagina;
+    for (let p = a.pagina; p <= fim; p++) {
+      const k = `${a.data}|${p}`;
+      if (!mapaPaginas.has(k)) mapaPaginas.set(k, []);
+      mapaPaginas.get(k).push(a);
+    }
+  }
+}
+function paginaPassaFiltros(data, pagina, f) {
+  if (!f.orgao && !f.categoria && !f.tipo && !f.edicao) return true;
+  return (mapaPaginas.get(`${data}|${pagina}`) || []).some(a => passaFiltros(a, f));
+}
+function edicaoIdMeta(m) {
+  return `${m.data}${m.tipo_edicao === "Extra" ? "-extra" : ""}`;
+}
+function paginaDoUrl(u, m) {
+  const s = String(u || "");
+  let x = s.match(/#p(\d+)/);
+  if (x) return +x[1];
+  x = s.match(/\/p(\d+)\/?$/);
+  if (x) return +x[1];
+  return m.pagina ? +m.pagina : 0;
+}
+function scoreSub(s) {
+  if (!s) return 0;
+  const locs = s.weighted_locations || [];
+  const total = locs.reduce((a, l) => a + (l.weight || 0) * (l.balanced_score || 0), 0);
+  return total || (s.locations || []).length;
+}
+function pdfUrl(data, tipo, pagina) {
+  const u = `https://diario.parauapebas.pa.gov.br/api/GerenciamentoPdfs/download?date=${data}&tipo=${tipo}`;
+  return pagina ? `${u}#page=${pagina}` : u;
+}
+
+async function carregarAno(ano) {
+  if (cacheAnos[ano]) return cacheAnos[ano];
+  const [a, n, nt, p] = await Promise.all([
+    fetch(`./dados/atos_${ano}.json`).then(r => r.ok ? r.json() : []).catch(() => []),
+    fetch(`./dados/nomes_${ano}.json`).then(r => r.ok ? r.json() : []).catch(() => []),
+    fetch(`./dados/nomes_texto_${ano}.json`).then(r => r.ok ? r.json() : []).catch(() => []),
+    fetch(`./dados/publicacoes_${ano}.json`).then(r => r.ok ? r.json() : []).catch(() => [])
+  ]);
+  cacheAnos[ano] = { atos: a, nomes: n, nomesTexto: nt, publicacoes: p };
+  return cacheAnos[ano];
+}
+async function garantirDados() {
+  if (dadosProntos) return;
+  if (carregando) return carregando;
+  carregando = (async () => {
+    const anos = elAno.value ? [elAno.value] : (ANOS.length ? ANOS : ["2026"]);
+    const partes = await Promise.all(anos.map(carregarAno));
+    atos = partes.flatMap(p => p.atos);
+    nomes = dedupeNomes(partes.flatMap(p => p.nomes));
+    nomesTexto = partes.flatMap(p => p.nomesTexto || []);
+    publicacoes = partes.flatMap(p => p.publicacoes || []);
+    orgaosConhecidos = new Set([
+      ...atos.map(a => norm(a.orgao)).filter(Boolean),
+      ...publicacoes.flatMap(p => (p.orgaos || []).map(norm))
+    ]);
+    montarMapaPaginas();
+    preencherFiltros();
+    dadosProntos = true;
+  })();
+  try { await carregando; } finally { carregando = null; }
+}
+function preencherFiltros() {
+  const co = new Map(), cc = new Map();
+  for (const a of atos) {
+    if (a.orgao) co.set(a.orgao, (co.get(a.orgao) || 0) + 1);
+    if (a.categoria) cc.set(a.categoria, (cc.get(a.categoria) || 0) + 1);
+  }
+  for (const p of publicacoes) {
+    for (const o of (p.orgaos || [])) co.set(o, (co.get(o) || 0) + 1);
+  }
+  const cd = new Map();
+  for (const p of publicacoes) {
+    for (const t of (p.tipos || [])) cd.set(t, (cd.get(t) || 0) + 1);
+  }
+  const orgaos = [...co.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+  const cats = [...cc.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+  const docs = [...cd.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+  const pu = urlAplicada ? new URLSearchParams() : new URLSearchParams(location.search);
+  const atualOrg = elOrgao.value || pu.get("orgao") || "";
+  const atualCat = elCategoria.value || pu.get("categoria") || "";
+  const atualDoc = elDoc.value || pu.get("doc") || "";
+  urlAplicada = true;
+  elOrgao.innerHTML = '<option value="">Todas as secretarias/órgãos</option>' +
+    orgaos.map(([v, n]) => `<option value="${esc(v)}">${esc(v)} (${n})</option>`).join("");
+  elCategoria.innerHTML = '<option value="">Todas as categorias</option>' +
+    cats.map(([v, n]) => `<option value="${esc(v)}">${esc(v)} (${n})</option>`).join("");
+  elDoc.innerHTML = '<option value="">Todas</option>' +
+    docs.map(([v, n]) => `<option value="${esc(v)}">${esc(v)} (${n})</option>`).join("");
+  if (cd.has(atualDoc)) elDoc.value = atualDoc;
+  if (co.has(atualOrg)) elOrgao.value = atualOrg;
+  if (cc.has(atualCat)) elCategoria.value = atualCat;
+}
+async function carregarPagefind() {
+  if (pagefind) return;
+  pagefind = await import("./pagefind/pagefind.js");
+  await pagefind.options({ excerptLength: 32 });
+}
+
+function tokenMatch(campoTokens, qTokens) {
+  return qTokens.every(t => campoTokens.some(c =>
+    c === t || (t.length >= 4 && (c.startsWith(t) || t.startsWith(c)))
+  ));
+}
+function buscarPessoas(q) {
+  const qn = norm(q), qts = tokens(q);
+  if (!qn) return [];
+  const out = [];
+  for (const p of nomes) {
+    const n = norm(p.nome);
+    const nt = tokens(p.nome);
+    if (!tokenMatch(nt, qts)) continue;
+    const score = n === qn ? 100 : (n.startsWith(qn) ? 90 : 70);
+    out.push({ p, score });
+  }
+  out.sort((a, b) => b.score - a.score || a.p.nome.localeCompare(b.p.nome));
+  totalPessoas = out.length;
+  return out.slice(0, 10);
+}
+function buscarNomesTexto(q) {
+  const qn = norm(q), qts = tokens(q);
+  if (!qn) return [];
+  if (qts.length < 2 && (qts[0] || "").length < 4) return [];
+  const out = [];
+  for (const n of nomesTexto) {
+    const nt = tokens(n.nome);
+    if (!tokenMatch(nt, qts)) continue;
+    const score = norm(n.nome) === qn ? 100 : 80;
+    out.push({ n, score });
+  }
+  out.sort((a, b) => b.score - a.score || String(b.n.data).localeCompare(String(a.n.data)));
+  totalNomesTexto = out.length;
+  return out.slice(0, 20);
+}
+function buscarAtos(q, f) {
+  const c = parseConsulta(q), qn = norm(q), qts = tokens(q);
+  const out = [];
+  const orgaoQuery = qts.find(t => orgaosConhecidos.has(t));
+  const semFiltro = !f.ano && !f.de && !f.ate && !f.orgao && !f.categoria && !f.tipo && !f.edicao;
+  for (const a of atos) {
+    if (!passaFiltros(a, f)) continue;
+    if (orgaoQuery && norm(a.orgao) !== orgaoQuery) continue;
+    let score = 0;
+    if (c.numero) {
+      if (numeroConfere(a, c.numero, c.tipo)) score = 100;
+      else continue;
+    } else if (!qts.length) {
+      if (semFiltro) continue;
+      score = 30;
+    } else {
+      const nomesA = norm((a.nomes || []).join(" "));
+      const nomesT = (a.nomes || []).flatMap(x => tokens(x));
+      const emT = tokens(a.ementa);
+      const orgT = tokens(`${a.orgao} ${a.categoria}`);
+      const camposT = [...new Set([
+        ...tokens(a.numero), ...tokens(a.tipo),
+        ...orgT, ...nomesT, ...(a.cargos || []).flatMap(x => tokens(x)), ...emT
+      ])];
+      if (!tokenMatch(camposT, qts)) continue;
+      if (nomesA.includes(qn)) score = 95;
+      else if (tokenMatch(nomesT, qts)) score = 90;
+      else if (tokenMatch(emT, qts)) score = 70;
+      else if (tokenMatch(orgT, qts)) score = 60;
+      else score = 50;
+      if (qn && norm(a.categoria) === qn) score += 10;
+      if (qn && norm(a.orgao) === qn) score += 10;
+    }
+    out.push({ a, score });
+  }
+  out.sort((x, y) => y.score - x.score || y.a.data.localeCompare(x.a.data));
+  totalAtos = out.length;
+  return out.slice(0, 100);
+}
+function passaFiltrosPub(p, f) {
+  if (f.tipo || f.categoria) return false;
+  if (f.doc && !(p.tipos || []).includes(f.doc)) return false;
+  if (f.ano && p.data.slice(0, 4) !== f.ano) return false;
+  if (f.de && p.data < f.de) return false;
+  if (f.ate && p.data > f.ate) return false;
+  if (f.edicao && p.tipo_edicao !== f.edicao) return false;
+  if (f.orgao && !(p.orgaos || []).includes(f.orgao)) return false;
+  return true;
+}
+function buscarPublicacoes(q, f) {
+  const qn = norm(q), qts = tokens(q);
+  const semFiltro = !f.ano && !f.de && !f.ate && !f.orgao && !f.edicao && !f.doc;
+  if (!qn && semFiltro) return [];
+  const alias = {
+    EDITAL: ["EDITAL", "AVISO", "DISPENSA", "PREGAO", "CHAMAMENTO", "CREDENCIAMENTO", "CONCORRENCIA"],
+    CONTRATO: ["CONTRATO", "EXTRATO", "TERMO", "ADITIVO"],
+    AVISO: ["AVISO", "EDITAL", "DISPENSA", "PREGAO"],
+    EXTRATO: ["EXTRATO", "CONTRATO"],
+    LICITACAO: ["LICITACAO", "DISPENSA", "PREGAO", "CONCORRENCIA", "CHAMAMENTO", "CREDENCIAMENTO"],
+    DISPENSA: ["DISPENSA", "AVISO", "EDITAL"]
+  };
+  const out = [];
+  for (const p of publicacoes) {
+    if (!passaFiltrosPub(p, f)) continue;
+    if (!qts.length) {
+      out.push({ p, score: 20 });
+      continue;
+    }
+    const tiposT = [];
+    for (const t of (p.tipos || [])) {
+      const nt = norm(t);
+      tiposT.push(nt);
+      for (const a of (alias[nt] || [])) tiposT.push(a);
+    }
+    const orgaosT = (p.orgaos || []).map(norm);
+    const orgaoQuery = qts.find(t => orgaosConhecidos.has(t));
+    if (orgaoQuery && !orgaosT.includes(orgaoQuery)) continue;
+    const camposT = [...new Set([
+      ...tiposT, ...orgaosT, ...tokens(p.numero), ...tokens(p.titulo), ...tokens(p.texto)
+    ])];
+    if (!tokenMatch(camposT, qts)) continue;
+    let score = 0;
+    const tiposExatos = (p.tipos || []).map(norm);
+    if (qts.some(t => tiposT.includes(t))) score += 60;
+    if (qts.some(t => tiposExatos.includes(t))) score += 40;
+    if (qts.some(t => orgaosT.includes(t))) score += 40;
+    if (p.numero && norm(p.numero).includes(qn)) score += 20;
+    if (tokenMatch(tokens(p.titulo), qts)) score += 20;
+    if (norm(p.texto).includes(qn)) score += 10;
+    if (tiposExatos.length > 2) score -= 25;
+    if ((p.orgaos || []).length > 2) score -= 15;
+    out.push({ p, score });
+  }
+  out.sort((x, y) => y.score - x.score || y.p.data.localeCompare(x.p.data));
+  totalPublicacoes = out.length;
+  return out.slice(0, aba === "publicacoes" ? 100 : 30);
+}
+
+async function buscarTexto(q, f) {
+  if (!pagefind || !q) return [];
+  const pf = {};
+  if (f.ano) pf.ano = [f.ano];
+  if (f.edicao) pf.tipo_edicao = [f.edicao];
+  const busca = await pagefind.search(q, Object.keys(pf).length ? { filters: pf } : {});
+  const limiteDocs = aba === "texto" ? 20 : 10;
+  const dados = await Promise.all(busca.results.slice(0, limiteDocs).map(r => r.data()));
+  const out = [], vistos = new Set();
+  const porEdicao = aba === "texto" ? 2 : 1;
+  for (const d of dados) {
+    const m = d.meta || {};
+    if (m.tipo === "pessoa") continue;
+    if (f.de && m.data && m.data < f.de) continue;
+    if (f.ate && m.data && m.data > f.ate) continue;
+    const subs = (d.sub_results && d.sub_results.length) ? d.sub_results.slice() : [null];
+    subs.sort((x, y) => scoreSub(y) - scoreSub(x));
+    let usados = 0;
+    for (const s of subs) {
+      if (usados >= porEdicao) break;
+      const raw = s ? s.url : d.url;
+      const pg = paginaDoUrl(raw, m);
+      if ((f.orgao || f.categoria || f.tipo || f.edicao) && !paginaPassaFiltros(m.data, pg, f)) continue;
+      const eid = edicaoIdMeta(m);
+      const key = `${eid}|${pg}`;
+      if (vistos.has(key)) continue;
+      vistos.add(key);
+      const hrefRaw = m.href || (m.local === "0" ? (m.oficial || raw) : raw);
+      out.push({
+        data: m.data || "", edicao: m.edicao || "", tipoEdicao: m.tipo_edicao || "",
+        pagina: pg, titulo: m.title || "", sub: s,
+        excerpt: (s ? s.excerpt : d.excerpt) || "",
+        href: linkUrl(hrefRaw),
+        pdf: m.oficial || pdfUrl(m.data, m.tipo_edicao, pg),
+        edicaoId: eid
+      });
+      usados++;
+    }
+  }
+  return out.slice(0, aba === "texto" ? 30 : 15);
+}
+
+function cardAto(item) {
+  const a = item.a;
+  const n = a.local === 1;
+  const href = n ? `./edicoes/${a.edicao_id}/#p${a.pagina}` : a.pdf;
+  const alvo = n ? "" : ' target="_blank" rel="noopener"';
+  const nomes = a.nomes || [], cargos = a.cargos || [];
+  const pessoas = nomes.length
+    ? nomes.map((x, i) => cargos[i] ? `${esc(x)} <span class="muted">— ${esc(cargos[i])}</span>` : esc(x)).join("; ")
+    : '<span class="muted">Sem nome identificado</span>';
+  return `<article class="card resultado ato-card">
+    <div class="topo">
+      <span class="badge badge-tipo">${esc(a.tipo)}</span>
+      <strong class="titulo"><a href="${href}"${alvo}>${esc(a.tipo)} ${esc(a.numero)}</a></strong>
+      <span class="badge badge-edicao">D.O. ${esc(a.edicao)}${a.tipo_edicao === "Extra" ? " Extra" : ""}</span>
+      <span class="badge badge-orgao">${esc(a.orgao)}</span>
+      <span class="badge badge-cat">${esc(a.categoria)}</span>
+    </div>
+    <div class="meta">${fmtData(a.data)} · página ${a.pagina}</div>
+    <div class="pessoas">${pessoas}</div>
+    <div class="ementa">${esc(a.ementa)}</div>
+    <div class="acoes">
+      <a href="${href}"${alvo}>abrir página</a>
+      <a href="${linkUrl(a.pdf)}" target="_blank" rel="noopener">PDF oficial</a>
+    </div>
+  </article>`;
+}
+function cardPublicacao(item) {
+  const p = item.p;
+  const externo = !!p.externo;
+  const n = p.local === 1;
+  const href = externo ? (p.href || p.pdf || "") : (n ? `./edicoes/${p.edicao_id}/#p${p.pagina}` : p.pdf);
+  const alvo = (n || externo) ? "" : ' target="_blank" rel="noopener"';
+  const tipos = (p.tipos || []).join(" / ");
+  const orgaos = (p.orgaos || []).join(", ");
+  const titulo = p.titulo || (p.numero ? `${tipos} ${p.numero}` : tipos);
+  const tituloHtml = href
+    ? `<a href="${linkUrl(href)}"${alvo}>${esc(titulo)}</a>`
+    : esc(titulo);
+  const badgeEdicao = externo
+    ? '<span class="badge badge-edicao">fora do D.O.</span>'
+    : `<span class="badge badge-edicao">D.O. ${esc(p.edicao)}${p.tipo_edicao === "Extra" ? " Extra" : ""}</span>`;
+  const texto = externo ? (p.texto || "") : (p.texto || "").slice(0, 420);
+  const acoes = [];
+  if (href) acoes.push(`<a href="${linkUrl(href)}"${alvo}>abrir</a>`);
+  if (p.pdf) acoes.push(`<a href="${linkUrl(p.pdf)}" target="_blank" rel="noopener">PDF oficial</a>`);
+  if (p.fonte) acoes.push(`<span class="muted">${esc(p.fonte)}</span>`);
+  return `<article class="card resultado publicacao-card">
+    <div class="topo">
+      <span class="badge badge-tipo">${esc(tipos || "PUBLICAÇÃO")}</span>
+      <strong class="titulo">${tituloHtml}</strong>
+      ${badgeEdicao}
+      ${orgaos ? `<span class="badge badge-orgao">${esc(orgaos)}</span>` : ""}
+    </div>
+    <div class="meta">${fmtData(p.data)}${externo ? "" : ` · página ${p.pagina}`}</div>
+    <div class="ementa"${externo ? ' style="white-space:pre-wrap"' : ""}>${esc(texto)}</div>
+    <div class="acoes">${acoes.join("")}</div>
+  </article>`;
+}
+function cardPessoa(item) {
+  const p = item.p;
+  return `<article class="card resultado pessoa-card">
+    <div class="topo">
+      <strong class="titulo"><a href="./pessoas/${esc(p.slug)}/">Pessoa: ${esc(p.nome)}</a></strong>
+      <span class="badge">${p.n || 0} ato(s)</span>
+    </div>
+    <div class="atos-lista">Ver todos os atos, órgãos e datas desta pessoa.</div>
+  </article>`;
+}
+function cardNomeTexto(item) {
+  const n = item.n;
+  const local = n.local === 1;
+  const href = local ? `./edicoes/${n.edicao_id}/#p${n.pagina}` : n.pdf;
+  const alvo = local ? "" : ' target="_blank" rel="noopener"';
+  return `<article class="card resultado pessoa-card">
+    <div class="topo">
+      <strong class="titulo"><a href="${href}"${alvo}>${esc(n.nome)}</a></strong>
+      <span class="badge">nome no texto</span>
+      <span class="badge badge-edicao">D.O. ${esc(n.edicao)}${n.tipo_edicao === "Extra" ? " Extra" : ""}</span>
+    </div>
+    <div class="meta">${fmtData(n.data)} · página ${n.pagina}</div>
+    <div class="ementa">${esc(n.texto || "")}</div>
+    <div class="acoes">
+      <a href="${href}"${alvo}>abrir página</a>
+      <a href="${linkUrl(n.pdf)}" target="_blank" rel="noopener">PDF oficial</a>
+    </div>
+  </article>`;
+}
+function cardTexto(t) {
+  const titulo = `D.O. ${t.edicao} · ${fmtData(t.data)} · pág. ${t.pagina}`;
+  return `<article class="card resultado texto-card">
+    <div class="topo">
+      <strong class="titulo"><a href="${t.href}">${esc(titulo)}</a></strong>
+      <span class="badge">${esc(t.tipoEdicao || "texto")}</span>
+      <span class="badge">texto integral</span>
+    </div>
+    <div class="excerpt">${t.sub ? t.sub.excerpt : t.excerpt}</div>
+    <div class="acoes">
+      <a href="${t.href}">abrir trecho</a>
+      <a href="${linkUrl(t.pdf)}" target="_blank" rel="noopener">PDF oficial</a>
+    </div>
+  </article>`;
+}
+function grupo(titulo, itens, fn, total) {
+  if (!itens.length) return "";
+  const n = total && total > itens.length ? `${itens.length} de ${total}` : itens.length;
+  return `<section class="grupo"><h2>${titulo} <span class="contagem">${n}</span></h2>
+    ${itens.map(fn).join("")}</section>`;
+}
+function renderizar(resPubs, resAtos, resPessoas, resNomesTexto, resTexto, q) {
+  const partes = [];
+  const soPubs = !!elDoc.value;
+  if (aba === "tudo" || aba === "publicacoes") partes.push(grupo("Publicações", resPubs, cardPublicacao, totalPublicacoes));
+  if (!soPubs && (aba === "tudo" || aba === "atos")) partes.push(grupo("Atos", resAtos, cardAto, totalAtos));
+  if (!soPubs && (aba === "tudo" || aba === "pessoas")) partes.push(grupo("Pessoas", resPessoas, cardPessoa, totalPessoas));
+  if (!soPubs && (aba === "tudo" || aba === "pessoas")) {
+    partes.push(grupo("Nomes no texto", resNomesTexto, cardNomeTexto, totalNomesTexto));
+  }
+  if (!soPubs && (aba === "texto" || (aba === "tudo" && resTexto.length))) {
+    partes.push(grupo("Texto integral", resTexto, cardTexto));
+  }
+  const consulta = parseConsulta(q);
+  if (!soPubs && aba === "tudo" && q && !consulta.numero && !resTexto.length
+      && (resPubs.length || resAtos.length || resPessoas.length || resNomesTexto.length)) {
+    partes.push(`<div class="card"><button id="btnTexto" class="btn-secundario" type="button">Ver também no texto integral</button></div>`);
+  }
+  const notaPub = (aba === "tudo" || aba === "publicacoes") && totalPublicacoes > resPubs.length
+    ? `<p class="muted">Mostrando ${resPubs.length} de ${totalPublicacoes} publicações.${aba === "tudo" ? " Abra a aba Publicações para ver todas." : ""}</p>` : "";
+  const notaAto = !soPubs && (aba === "tudo" || aba === "atos") && totalAtos > resAtos.length
+    ? `<p class="muted">Mostrando os ${resAtos.length} primeiros de ${totalAtos} atos. Refine com filtros.</p>` : "";
+  const notaPessoa = !soPubs && (aba === "tudo" || aba === "pessoas") && totalPessoas > resPessoas.length
+    ? `<p class="muted">Mostrando ${resPessoas.length} de ${totalPessoas} pessoas.</p>` : "";
+  elGrupos.innerHTML = partes.join("") + notaPub + notaAto + notaPessoa;
+  const partesResumo = [];
+  if (aba === "tudo" || aba === "publicacoes") {
+    partesResumo.push(`${resPubs.length}${totalPublicacoes > resPubs.length ? ` de ${totalPublicacoes}` : ""} publicação(ões)`);
+  }
+  if (!soPubs && (aba === "tudo" || aba === "atos")) {
+    partesResumo.push(`${resAtos.length}${totalAtos > resAtos.length ? ` de ${totalAtos}` : ""} ato(s)`);
+  }
+  if (!soPubs && (aba === "tudo" || aba === "pessoas")) {
+    partesResumo.push(`${resPessoas.length}${totalPessoas > resPessoas.length ? ` de ${totalPessoas}` : ""} pessoa(s)`);
+    if (resNomesTexto.length) partesResumo.push(`${resNomesTexto.length} nome(s) no texto`);
+  }
+  if (!soPubs && (aba === "tudo" || aba === "texto") && resTexto.length) partesResumo.push(`${resTexto.length} trecho(s)`);
+  const total = resPubs.length + (!soPubs ? resAtos.length + resPessoas.length + resNomesTexto.length + resTexto.length : 0);
+  elResumo.textContent = total ? partesResumo.join(" · ") : "Nenhum resultado.";
+  elVazio.hidden = total > 0;
+  const btn = $("btnTexto");
+  if (btn) btn.onclick = () => { textoAberto = true; executarBusca(); };
+}
+function atualizarChips() {
+  const f = filtros();
+  const itens = [];
+  const rot = { ano: "Ano", de: "De", ate: "Até", orgao: "Secretaria", categoria: "Categoria", tipo: "Tipo", doc: "Publicação", edicao: "Edição" };
+  for (const k of ["ano", "de", "ate", "orgao", "categoria", "tipo", "doc", "edicao"]) {
+    if (f[k]) itens.push(`<span class="chip">${rot[k]}: ${esc(f[k])} <button type="button" data-chip="${k}" aria-label="remover">×</button></span>`);
+  }
+  elChips.innerHTML = itens.join("");
+}
+function sincronizarUrl() {
+  const u = new URL(location.href);
+  const set = (k, v) => { if (v) u.searchParams.set(k, v); else u.searchParams.delete(k); };
+  set("q", elQ.value.trim());
+  set("aba", aba === "tudo" ? "" : aba);
+  set("ano", elAno.value); set("de", elDe.value); set("ate", elAte.value);
+  set("orgao", elOrgao.value); set("categoria", elCategoria.value);
+  set("tipo", elTipo.value); set("doc", elDoc.value); set("edicao", elEdicao.value);
+  set("ordenar", elOrdenar.value === "relevancia" ? "" : elOrdenar.value);
+  history.replaceState(null, "", u);
+}
+async function executarBusca() {
+  const q = elQ.value.trim();
+  const qtsBusca = tokens(q);
+  if (aba === "tudo" && qtsBusca.some(t => DOC_TERMS.includes(t)) && !textoAberto) {
+    aba = "publicacoes";
+    for (const b of elAbas) b.classList.toggle("ativa", b.dataset.aba === aba);
+  }
+  let f = filtros();
+  const pu = new URLSearchParams(location.search);
+  const temFiltroUrl = !!(pu.get("orgao") || pu.get("categoria") || pu.get("doc"));
+  const semFiltroInicial = !q && !temFiltroUrl && !f.ano && !f.de && !f.ate && !f.tipo && !f.doc && !f.edicao;
+  if (semFiltroInicial) {
+    elGrupos.innerHTML = ""; elResumo.textContent = ""; elVazio.hidden = true;
+    return;
+  }
+  elResumo.textContent = "Carregando índice…";
+  try {
+    await garantirDados();
+    f = filtros();
+    sincronizarUrl();
+    atualizarChips();
+    const resAtos = buscarAtos(q, f);
+    const resPessoas = buscarPessoas(q);
+    const resNomesTexto = buscarNomesTexto(q);
+    const c = parseConsulta(q);
+    const pessoaForte = resPessoas.length > 0 && resPessoas[0].score >= 90;
+    const temDoc = qtsBusca.some(t => DOC_TERMS.includes(t));
+    const resPubs = (f.doc || (temDoc && !c.numero))
+      ? buscarPublicacoes(q, f) : [];
+    let resTexto = [];
+    const talvezNome = qtsBusca.length >= 2 && !temDoc && !c.numero;
+    const querTexto = !f.doc && (aba === "texto" || textoAberto
+      || (aba === "tudo" && !resPubs.length && !resAtos.length && !resPessoas.length
+          && !resNomesTexto.length)
+      || (talvezNome && !resNomesTexto.length && !pessoaForte));
+    if (querTexto && q) {
+      await carregarPagefind();
+      resTexto = await buscarTexto(q, f);
+    }
+    if (f.ordenar === "data") {
+      resPubs.sort((x, y) => y.p.data.localeCompare(x.p.data));
+      resAtos.sort((x, y) => y.a.data.localeCompare(x.a.data));
+      resTexto.sort((x, y) => String(y.data).localeCompare(String(x.data)));
+    }
+    renderizar(resPubs, resAtos, resPessoas, resNomesTexto, resTexto, q);
+  } catch (e) {
+    elResumo.textContent = "Falha na busca: " + e.message;
+    console.error(e);
+  }
+}
+
+async function mostrarSugestoes() {
+  const q = elQ.value.trim();
+  if (q.length < 2) { esconderSugestoes(); return; }
+  try { await garantirDados(); } catch { return; }
+  const c = parseConsulta(q);
+  const out = [];
+  if (c.numero) {
+    for (const a of atos.filter(a => numeroConfere(a, c.numero, c.tipo)).slice(0, 3)) {
+      out.push({ tipo: "ato", valor: `${a.tipo} ${a.numero}`, rotulo: `${a.tipo} ${a.numero}`, sub: `${fmtData(a.data)} · ${a.orgao}` });
+    }
+  }
+  for (const x of buscarPessoas(q).slice(0, 5)) {
+    out.push({ tipo: "pessoa", valor: x.p.nome, rotulo: `Pessoa: ${x.p.nome}`, sub: `${x.p.n || 0} ato(s)` });
+  }
+  const qn = norm(q);
+  for (const o of [...new Set(atos.map(a => a.orgao).filter(Boolean))].filter(o => norm(o).includes(qn)).slice(0, 3)) {
+    out.push({ tipo: "orgao", valor: o, rotulo: `Secretaria: ${o}`, sub: "filtrar" });
+  }
+  for (const cat of [...new Set(atos.map(a => a.categoria).filter(Boolean))].filter(c => norm(c).includes(qn)).slice(0, 3)) {
+    out.push({ tipo: "categoria", valor: cat, rotulo: `Categoria: ${cat}`, sub: "filtrar" });
+  }
+  sugestoes = out.slice(0, 8);
+  sugIdx = -1;
+  sugNavegou = false;
+  if (!sugestoes.length) { esconderSugestoes(); return; }
+  elSug.innerHTML = sugestoes.map((s, i) => `<div class="sug-item" data-i="${i}">
+    <span class="sug-tipo">${esc(s.tipo)}</span>
+    <span><span class="sug-valor">${esc(s.rotulo)}</span> <span class="sug-sub">${esc(s.sub)}</span></span>
+  </div>`).join("");
+  elSug.hidden = false;
+}
+function esconderSugestoes() { elSug.hidden = true; sugestoes = []; sugIdx = -1; sugNavegou = false; }
+function escolherSugestao(i) {
+  const s = sugestoes[i];
+  if (!s) return;
+  if (s.tipo === "orgao") { elOrgao.value = s.valor; elQ.value = ""; }
+  else if (s.tipo === "categoria") { elCategoria.value = s.valor; elQ.value = ""; }
+  else { elQ.value = s.valor; }
+  esconderSugestoes();
+  textoAberto = false;
+  executarBusca();
+}
+function ativarAba(nome) {
+  aba = nome;
+  for (const b of elAbas) b.classList.toggle("ativa", b.dataset.aba === nome);
+  textoAberto = false;
+  executarBusca();
+}
+function limparTudo() {
+  elQ.value = ""; elAno.value = ""; elDe.value = ""; elAte.value = "";
+  elOrgao.value = ""; elCategoria.value = ""; elTipo.value = ""; elDoc.value = "";
+  elEdicao.value = ""; elOrdenar.value = "relevancia";
+  elGrupos.innerHTML = ""; elResumo.textContent = ""; elVazio.hidden = true;
+  atualizarChips(); sincronizarUrl();
+}
+async function aplicarAtalho(tipo) {
+  if (tipo === "exoneracao" || tipo === "nomeacao" || tipo === "designacao") {
+    await garantirDados();
+    const alvo = tipo === "exoneracao" ? "EXONERACAO"
+      : tipo === "nomeacao" ? "NOMEACAO/CONTRATACAO" : "DESIGNACAO/COMISSAO";
+    const cat = [...new Set(atos.map(a => a.categoria))]
+      .find(c => norm(c).replace(/\s/g, "").includes(alvo));
+    if (cat) elCategoria.value = cat;
+    elQ.value = "";
+  } else if (tipo === "decreto" || tipo === "portaria") {
+    elTipo.value = tipo.toUpperCase();
+    elQ.value = "";
+  } else if (tipo === "edital" || tipo === "aviso" || tipo === "contrato") {
+    elDoc.value = tipo.toUpperCase();
+    elTipo.value = "";
+    elCategoria.value = "";
+    aba = "publicacoes";
+    for (const b of elAbas) b.classList.toggle("ativa", b.dataset.aba === aba);
+  } else if (tipo === "7dias") {
+    const base = MAX_DATA || (ANOS.length ? `${ANOS[ANOS.length - 1]}-12-31` : "");
+    if (base) {
+      const d = new Date(`${base}T12:00:00`);
+      d.setDate(d.getDate() - 7);
+      elDe.value = d.toISOString().slice(0, 10);
+      elAte.value = base;
+    }
+  }
+  textoAberto = false;
+  executarBusca();
+}
+
+elQ.addEventListener("input", () => {
+  textoAberto = false;
+  clearTimeout(timerBusca); timerBusca = setTimeout(executarBusca, 350);
+  clearTimeout(timerSug); timerSug = setTimeout(mostrarSugestoes, 120);
+});
+elQ.addEventListener("focus", () => { garantirDados().then(mostrarSugestoes); });
+elQ.addEventListener("keydown", (e) => {
+  if (e.key === "ArrowDown" && !elSug.hidden) {
+    e.preventDefault(); sugNavegou = true;
+    sugIdx = sugIdx < 0 ? 0 : Math.min(sugIdx + 1, sugestoes.length - 1);
+    elSug.querySelectorAll(".sug-item").forEach((x, i) => x.classList.toggle("ativo", i === sugIdx));
+  } else if (e.key === "ArrowUp" && !elSug.hidden) {
+    e.preventDefault(); sugNavegou = true;
+    sugIdx = Math.max(sugIdx - 1, 0);
+    elSug.querySelectorAll(".sug-item").forEach((x, i) => x.classList.toggle("ativo", i === sugIdx));
+  } else if (e.key === "Enter") {
+    if (sugNavegou && !elSug.hidden && sugIdx >= 0) { e.preventDefault(); escolherSugestao(sugIdx); }
+    else { esconderSugestoes(); executarBusca(); }
+  } else if (e.key === "Escape") { esconderSugestoes(); }
+});
+elSug.addEventListener("mousedown", (e) => {
+  const item = e.target.closest(".sug-item");
+  if (!item) return;
+  e.preventDefault();
+  escolherSugestao(+item.dataset.i);
+});
+elSug.addEventListener("mouseover", (e) => {
+  const item = e.target.closest(".sug-item");
+  if (!item) return;
+  sugIdx = +item.dataset.i;
+  sugNavegou = false;
+  elSug.querySelectorAll(".sug-item").forEach((x, i) => x.classList.toggle("ativo", i === sugIdx));
+});
+document.addEventListener("click", (e) => {
+  if (!elSug.contains(e.target) && e.target !== elQ) esconderSugestoes();
+});
+elBtn.addEventListener("click", () => { esconderSugestoes(); executarBusca(); });
+for (const b of elAbas) b.addEventListener("click", () => ativarAba(b.dataset.aba));
+for (const el of [elAno, elDe, elAte, elOrgao, elCategoria, elTipo, elDoc, elEdicao, elOrdenar]) {
+  el.addEventListener("change", () => {
+    if (el === elAno) { dadosProntos = false; atos = []; nomes = []; nomesTexto = []; publicacoes = []; }
+    textoAberto = false;
+    executarBusca();
+  });
+}
+elLimpar.addEventListener("click", limparTudo);
+elChips.addEventListener("click", (e) => {
+  const b = e.target.closest("button[data-chip]");
+  if (!b) return;
+  const k = b.dataset.chip;
+  if (k === "ano") elAno.value = "";
+  if (k === "de") elDe.value = "";
+  if (k === "ate") elAte.value = "";
+  if (k === "orgao") elOrgao.value = "";
+  if (k === "categoria") elCategoria.value = "";
+  if (k === "tipo") elTipo.value = "";
+  if (k === "doc") elDoc.value = "";
+  if (k === "edicao") elEdicao.value = "";
+  executarBusca();
+});
+document.querySelectorAll("[data-atalho]").forEach(b =>
+  b.addEventListener("click", () => aplicarAtalho(b.dataset.atalho)));
+
+(async function iniciar() {
+  const p = new URLSearchParams(location.search);
+  if (p.get("q")) elQ.value = p.get("q");
+  if (p.get("aba")) aba = p.get("aba");
+  if (p.get("ano")) elAno.value = p.get("ano");
+  if (p.get("de")) elDe.value = p.get("de");
+  if (p.get("ate")) elAte.value = p.get("ate");
+  const orgaoUrl = p.get("orgao") || "";
+  const catUrl = p.get("categoria") || "";
+  const docUrl = p.get("doc") || "";
+  if (p.get("tipo")) elTipo.value = p.get("tipo");
+  if (p.get("edicao")) elEdicao.value = p.get("edicao");
+  if (p.get("ordenar")) elOrdenar.value = p.get("ordenar");
+  for (const b of elAbas) b.classList.toggle("ativa", b.dataset.aba === aba);
+  if (elQ.value || elAno.value || elDe.value || elAte.value || elTipo.value || elEdicao.value || orgaoUrl || catUrl || docUrl) {
+    await executarBusca();
+  }
+})();
+</script>
+
+<footer data-pagefind-ignore>Fonte: Diário Oficial Eletrônico de Parauapebas (EDOMP).
+Texto extraído dos PDFs oficiais; em caso de divergência, vale o PDF original.</footer>
+</main></body></html>

@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://angelojordy-svg.github.io/diario-parauapebas/sitemap.xml
